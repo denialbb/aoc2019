@@ -8,6 +8,12 @@ import (
 	"strings"
 )
 
+var debugLog *log.Logger //nolint:gochecknoglobals
+
+func Init(logger *log.Logger) {
+	debugLog = logger
+}
+
 func Execute(memory []int) []int {
 	result := make([]int, len(memory))
 	copy(result, memory)
@@ -20,17 +26,17 @@ func Execute(memory []int) []int {
 			p2 := result[i+2]
 			p3 := result[i+3]
 
-			log.Default().Printf("Adding %d and %d, storing at position %d\n", result[p1], result[p2], p3)
+			debugLog.Printf("Adding %d and %d, storing at position %d\n", result[p1], result[p2], p3)
 			result[p3] = result[p1] + result[p2]
 		case Multiply:
 			p1 := result[i+1]
 			p2 := result[i+2]
 			p3 := result[i+3]
 
-			log.Default().Printf("Multiplying %d and %d, storing at position %d\n", result[p1], result[p2], p3)
+			debugLog.Printf("Multiplying %d and %d, storing at position %d\n", result[p1], result[p2], p3)
 			result[p3] = result[p1] * result[p2]
 		case Halt:
-			log.Default().Println("Halting execution")
+			debugLog.Println("Halting execution")
 
 			return result
 		default:
@@ -39,6 +45,13 @@ func Execute(memory []int) []int {
 	}
 
 	return result
+}
+
+func Restore1202ProgramAlarm(memory []int) []int {
+	memory[1] = 12
+	memory[2] = 2
+
+	return memory
 }
 
 func ReadMemoryFromFile(filename string) []int {
