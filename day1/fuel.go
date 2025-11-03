@@ -8,22 +8,12 @@ import (
 	"strconv"
 )
 
-func recursiveFuel(module_mass int) int {
-	total_fuel := 0
-	current_mass := module_mass
-
-	for {
-		fuel_mass := getFuel(current_mass)
-
-		if fuel_mass == 0 {
-			break
-		}
-
-		total_fuel += fuel_mass
-		current_mass = fuel_mass
+func recursiveFuel(mass int) int {
+	fuel := getFuel(mass)
+	if fuel <= 0 {
+		return 0
 	}
-
-	return total_fuel
+	return fuel + recursiveFuel(fuel)
 }
 
 func getFuel(mass int) int {
