@@ -57,17 +57,23 @@ func Restore1202ProgramAlarm(memory []int) []int {
 	return memory
 }
 
+const (
+	minNoun = 0
+	maxNoun = 99
+	minVerb = 0
+	maxVerb = 99
+)
+
 func FindNounAndVerbForOutput(initialMemory []int, targetOutput int) (int, int) {
 	debugLog.Printf("Finding noun and verb for target output %d\n", targetOutput)
 
-	memory := make([]int, len(initialMemory))
-
-	for noun := 0; noun <= 99; noun++ {
-		for verb := 0; verb <= 99; verb++ {
+	for noun := minNoun; noun <= maxNoun; noun++ {
+		for verb := minVerb; verb <= maxVerb; verb++ {
+			memory := make([]int, len(initialMemory))
 			copy(memory, initialMemory)
-			initialMemory[1] = noun
-			initialMemory[2] = verb
-			result := Execute(initialMemory)[0]
+			memory[1] = noun
+			memory[2] = verb
+			result := Execute(memory)[0]
 
 			if result == targetOutput {
 				debugLog.Printf("Found noun %d and verb %d for target output %d\n", noun, verb, targetOutput)
@@ -79,12 +85,12 @@ func FindNounAndVerbForOutput(initialMemory []int, targetOutput int) (int, int) 
 	return -1, -1
 }
 
-func ReadMemoryFromFile(filename string) []int {
+func ReadMemoryFromFile(filename string) (*[]int, error) {
 	memory := []int{}
 
 	file, err := os.Open(filename)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	scanner := bufio.NewScanner(file)
@@ -95,13 +101,13 @@ func ReadMemoryFromFile(filename string) []int {
 		for _, s := range strings.Split(str, ",") {
 			instruction, err := strconv.Atoi(s)
 			if err != nil {
-				log.Fatal(err)
+				return nil, err
 			}
 			memory = append(memory, instruction)
 		}
 	}
 
-	return memory
+	return &memory, nil
 }
 
 func MemoryEquals(a []int, b []int) bool {

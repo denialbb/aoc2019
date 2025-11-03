@@ -40,14 +40,16 @@ func main() {
 		debugLog = log.New(io.Discard, "", 0)
 	}
 
-	intcode.Init(debugLog)
-
-	memory := intcode.ReadMemoryFromFile("input")
-	result := execute(memory)
-	log.Default().Printf("Value at position 0: %d\n", result)
-
-	debugLog.Println("Memory:", memory)
-	noun, verb := findNounAndVerb(memory, 19690720)
-
-	log.Default().Printf("Noun: %d, Verb: %d, 100 * noun + verb = %d\n", noun, verb, 100*noun+verb)
+	    intcode.Init(debugLog)
+	
+		memory, err := intcode.ReadMemoryFromFile("input")
+		if err != nil {
+			log.Fatal(err)
+		}
+		result := execute(*memory)
+		log.Default().Printf("Value at position 0: %d\n", result)
+	
+		debugLog.Println("Memory:", memory)
+		noun, verb := findNounAndVerb(*memory, 19690720)
+		log.Default().Printf("Noun: %d, Verb: %d, 100 * noun + verb = %d\n", noun, verb, 100*noun+verb)
 }
