@@ -15,7 +15,6 @@ func CalculatePossiblePasswords(lower, upper int) int {
 
 	for n := lower; n <= upper; n++ {
 		if isValid(n) {
-			println(n)
 			result++
 		}
 	}
@@ -24,7 +23,8 @@ func CalculatePossiblePasswords(lower, upper int) int {
 }
 
 func isValid(n int) bool {
-	contains_same_adjecent := false
+	contains_same_adjacent := false
+	digits_adjacent := make(map[int]int)
 
 	// check for non decreasing digits
 	for i := 0; i < 5; i++ {
@@ -35,10 +35,17 @@ func isValid(n int) bool {
 			return false
 		}
 		
+		// check for adjacent digits
 		if currentDigit == nextDigit {
-			contains_same_adjecent = true
+			digits_adjacent[currentDigit]++
 		}
 	}
 
-	return contains_same_adjecent
+	for _ , v := range digits_adjacent {
+		if v == 1 {
+			contains_same_adjacent = true
+		}
+	}
+
+	return contains_same_adjacent
 }
