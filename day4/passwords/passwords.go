@@ -1,13 +1,16 @@
 package passwords
 
-import "math"
+import (
+	"math"
+	"testing"
+)
 
 // damn elves threw out the password
 // 6 digit number
 // value in range of input
 // two adjacent digits are the same
 // from left to right, the digits never decrease
-// -- only increase or stay the same 
+// -- only increase or stay the same
 //
 // how many passwords are valid
 func CalculatePossiblePasswords(lower, upper int) int {
