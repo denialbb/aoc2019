@@ -15,16 +15,12 @@ var (
 
 var debugLog *log.Logger
 
-func execute(memory []int) int {
-	memory = intcode.Restore1202ProgramAlarm(memory)
-
+func execute(memory []int) {
 	debugLog.Println("Initial memory:", memory)
 
 	memory = intcode.Execute(memory)
 
 	debugLog.Println("Final memory:", memory)
-
-	return memory[0]
 }
 
 func findNounAndVerb(initialMemory []int, targetOutput int) (int, int) {
@@ -56,7 +52,6 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		result := execute(*memory)
-		log.Default().Printf("Value at position 0: %d\n", result)
+		execute(*memory)
 	}
 }
