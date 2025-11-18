@@ -48,17 +48,25 @@ func TEST() {
 	fmt.Scan(&system_ID)
 
 	switch system_ID {
-		case ACU:
+	case ACU:
 		println("Running diagnostics for ACU (re-enter the id when prompted)...")
-		program_file := "./programs/ACU-diagnostic.i"
+		program_file := "./programs/diagnostic.i"
 		program, err := ReadMemoryFromFile(program_file)
 		if err != nil {
 			log.Fatalf("Error reading program file: %v", err)
 		}
 		Execute(*program)
-			
-		default:
-			log.Fatalf("Unknown id %d", system_ID)
+	case TRC:
+		println("Running diagnostics for TRC (re-enter the id when prompted)...")
+		program_file := "./programs/diagnostic.i"
+		program, err := ReadMemoryFromFile(program_file)
+		if err != nil {
+			log.Fatalf("Error reading program file: %v", err)
+		}
+		Execute(*program)
+
+	default:
+		log.Fatalf("Unknown id %d", system_ID)
 
 	}
 
