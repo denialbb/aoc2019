@@ -25,7 +25,6 @@ func findNounAndVerbTestProgram(program_file string, target_output int, expected
 }
 
 func runTestProgram(program_file string, expected_file string, t *testing.T) {
-
 	var debugLog *log.Logger
 	debugLog = log.New(os.Stdout, "[DEBUG] ", log.LstdFlags)
 	Init(debugLog)
@@ -45,11 +44,26 @@ func runTestProgram(program_file string, expected_file string, t *testing.T) {
 	}
 }
 
+func testModes(t *testing.T) {
+	var debugLog *log.Logger
+	debugLog = log.New(os.Stdout, "[DEBUG] ", log.LstdFlags)
+	Init(debugLog)
+
+	var program []int = []int{1002,4,3,4,33}
+	var program_ptr *[]int = &program
+	results := Execute(*program_ptr)
+	debugLog.Println("Results:", results)
+}
+
 func TestIntcode(t *testing.T) {
+	testModes(t)
+
 	runTestProgram("tests/program_2", "tests/expected_2", t)
 	runTestProgram("tests/program_3", "tests/expected_3", t)
 	runTestProgram("tests/program_4", "tests/expected_4", t)
 	runTestProgram("tests/program_5", "tests/expected_5", t)
 	runTestProgram("tests/program_1", "tests/expected_1", t)
+	runTestProgram("tests/program_6", "tests/expected_6", t)
 	// findNounAndVerbTestProgram("../input", 3706713, 12, 2, t)
+
 }

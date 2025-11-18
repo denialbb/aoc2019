@@ -11,11 +11,11 @@ type Opcode int
 // Opcode 4 outputs the value of its only parameter.
 // For example, the instruction 4,50 would output the value at address 50.
 const (
-	Add      Opcode = 1 // input i, input j, parameter: position
-	Multiply Opcode = 2 // input i, input j, parameter: position
-	Store 	 Opcode = 3 // input i, parameter: position
-	Outputs	 Opcode = 4 // input -, parameter: position
-	Halt     Opcode = 99
+	ADD      Opcode = 1 // input i, input j, parameter: position
+	MULT 	 Opcode = 2 // input i, input j, parameter: position
+	INPUT 	 Opcode = 3 // input i, parameter: position
+	OUT	     Opcode = 4 // input -, parameter: position
+	HALT     Opcode = 99
 )
 
 // ABCDE

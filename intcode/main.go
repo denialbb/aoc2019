@@ -10,6 +10,7 @@ import (
 
 var (
 	verbose bool
+	test bool
 )
 
 var debugLog *log.Logger
@@ -34,6 +35,7 @@ func main() {
 	var inputFilePath string
 
 	flag.BoolVar(&verbose, "v", false, "enable verbose logging")
+	flag.BoolVar(&test, "t", false, "TEST diagnostic program")
 	flag.StringVar(&inputFilePath, "i", "input", "path to the input file")
 	flag.Parse()
 
@@ -44,14 +46,17 @@ func main() {
 	}
 	intcode.Init(debugLog)
 
-	memory, err := intcode.ReadMemoryFromFile(inputFilePath)
+	if test {
+		intcode.TEST()
+		return
+	}
+
+	if inputFilePath != "" {
+		memory, err := intcode.ReadMemoryFromFile(inputFilePath)
 		if err != nil {
 			log.Fatal(err)
 		}
 		result := execute(*memory)
 		log.Default().Printf("Value at position 0: %d\n", result)
-	
-		debugLog.Println("Memory:", memory)
-		noun, verb := findNounAndVerb(*memory, 19690720)
-		log.Default().Printf("Noun: %d, Verb: %d, 100 * noun + verb = %d\n", noun, verb, 100*noun+verb)
+	}
 }
