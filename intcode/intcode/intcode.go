@@ -67,8 +67,9 @@ func Execute(memory []int) []int {
 func getParameters(memory []int, index int, n_parameters int) []int {
 	params := make([]int, n_parameters)
 	for i := range n_parameters {
-		params = append(params, memory[index+i+1])
+		params[i] = memory[index+i+1]
 	}
+	// debugLog.Println(params)
 	return params
 }
 
